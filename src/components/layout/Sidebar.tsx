@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -22,7 +21,7 @@ const Sidebar: React.FC = () => {
           <div className="bg-eco-green p-2 rounded-md">
             <LeafIcon className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-eco-dark">EcoSensor</span>
+          <span className="text-xl font-bold text-eco-dark">ECOVATE</span>
         </div>
         <p className="text-xs text-slate-500 mt-1">Carbon Offset Monitoring</p>
       </div>
@@ -51,11 +50,11 @@ const Sidebar: React.FC = () => {
       <div className="p-4 border-t">
         <div className="flex items-center gap-2 px-3 py-2">
           <div className="h-8 w-8 rounded-full bg-eco-teal flex items-center justify-center text-white font-medium">
-            ES
+            EC
           </div>
           <div>
-            <p className="text-sm font-medium">EcoSensor Admin</p>
-            <p className="text-xs text-slate-500">admin@ecosensor.com</p>
+            <p className="text-sm font-medium">ECOVATE Admin</p>
+            <p className="text-xs text-slate-500">admin@ecovate.com</p>
           </div>
         </div>
       </div>
