@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { mockSensors } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { PlusIcon, RefreshCwIcon } from 'lucide-react';
+import { PlusIcon, RefreshCwIcon, LinkIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SensorsPage: React.FC = () => {
   return (
@@ -63,6 +64,14 @@ const SensorsPage: React.FC = () => {
                   <div className="text-slate-500">Coordinates:</div>
                   <div className="font-mono text-xs truncate">
                     {sensor.location.lat.toFixed(4)}, {sensor.location.lng.toFixed(4)}
+                  </div>
+                  
+                  <div className="text-slate-500">Projects:</div>
+                  <div className="flex items-center">
+                    <Link to="/analytics" className="text-eco-green hover:underline flex items-center">
+                      <LinkIcon className="h-3 w-3 mr-1" />
+                      View Projects
+                    </Link>
                   </div>
                 </div>
                 
