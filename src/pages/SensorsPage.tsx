@@ -1,13 +1,22 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { mockSensors } from '@/lib/mockData';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { PlusIcon, RefreshCwIcon, LinkIcon } from 'lucide-react';
+import { PlusIcon, RefreshCwIcon, LinkIcon, Coins } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import InvestmentDialog from '@/components/InvestmentDialog';
 
 const SensorsPage: React.FC = () => {
+  const [selectedSensor, setSelectedSensor] = useState<{ id: string; name: string } | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  
+  const handleInvestClick = (sensorId: string, sensorName: string) => {
+    setSelectedSensor({ id: sensorId, name: sensorName });
+    setDialogOpen(true);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -67,11 +76,20 @@ const SensorsPage: React.FC = () => {
                   </div>
                   
                   <div className="text-slate-500">Projects:</div>
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2">
                     <Link to="/analytics" className="text-eco-green hover:underline flex items-center">
                       <LinkIcon className="h-3 w-3 mr-1" />
                       View Projects
                     </Link>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="h-6 px-2 text-xs bg-eco-teal text-white hover:bg-eco-teal/90"
+                      onClick={() => handleInvestClick(sensor.id, sensor.name)}
+                    >
+                      <Coins className="h-3 w-3 mr-1" />
+                      Invest
+                    </Button>
                   </div>
                 </div>
                 
@@ -88,6 +106,15 @@ const SensorsPage: React.FC = () => {
           </Card>
         ))}
       </div>
+      
+      {selectedSensor && (
+        <InvestmentDialog 
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          sensorName={selectedSensor.name}
+          projectName={`Carbon Offset Project ${selectedSensor.id.substring(0, 4)}`}
+        />
+      )}
     </div>
   );
 };
