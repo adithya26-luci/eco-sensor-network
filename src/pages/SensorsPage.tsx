@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { PlusIcon, RefreshCwIcon, LinkIcon, Coins } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import InvestmentDialog from '@/components/InvestmentDialog';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const SensorsPage: React.FC = () => {
   const [selectedSensor, setSelectedSensor] = useState<{ id: string; name: string } | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const isMobile = useIsMobile();
   
   const handleInvestClick = (sensorId: string, sensorName: string) => {
     setSelectedSensor({ id: sensorId, name: sensorName });
@@ -19,19 +21,19 @@ const SensorsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className={`${isMobile ? 'flex-col space-y-3' : 'flex justify-between items-center'}`}>
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Sensors</h1>
           <p className="text-muted-foreground">Manage and monitor your sensor network</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size={isMobile ? "sm" : "sm"}>
             <RefreshCwIcon className="h-4 w-4 mr-2" />
-            Refresh
+            {!isMobile && "Refresh"}
           </Button>
-          <Button size="sm">
+          <Button size={isMobile ? "sm" : "sm"}>
             <PlusIcon className="h-4 w-4 mr-2" />
-            Add Sensor
+            {!isMobile && "Add Sensor"}
           </Button>
         </div>
       </div>
@@ -76,7 +78,7 @@ const SensorsPage: React.FC = () => {
                   </div>
                   
                   <div className="text-slate-500">Projects:</div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <Link to="/analytics" className="text-eco-green hover:underline flex items-center">
                       <LinkIcon className="h-3 w-3 mr-1" />
                       View Projects

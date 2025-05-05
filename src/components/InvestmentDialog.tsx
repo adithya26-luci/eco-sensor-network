@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Bitcoin, Coins, WalletCards } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface InvestmentDialogProps {
   open: boolean;
@@ -18,6 +19,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
   const [amount, setAmount] = useState<string>('');
   const [paymentMethod, setPaymentMethod] = useState<'bitcoin' | 'ethereum' | 'usdc'>('bitcoin');
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = useIsMobile();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className={isMobile ? "w-[95%] max-w-[95%] p-4 rounded-lg" : "sm:max-w-[425px]"}>
         <DialogHeader>
           <DialogTitle>Invest in Carbon Offset Project</DialogTitle>
           <DialogDescription>
@@ -59,6 +61,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
                 value={amount} 
                 onChange={(e) => setAmount(e.target.value)}
                 required
+                inputMode="decimal"
               />
             </div>
             <p className="text-xs text-slate-500">Minimum investment: 0.001 BTC / 0.01 ETH / 10 USDC</p>
@@ -66,7 +69,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
           
           <div className="space-y-2">
             <Label>Payment Method</Label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-3 gap-2"}>
               <Button 
                 type="button"
                 variant={paymentMethod === 'bitcoin' ? 'default' : 'outline'} 
@@ -97,11 +100,20 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
             </div>
           </div>
           
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+          <DialogFooter className={isMobile ? "flex-col space-y-2" : ""}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => onOpenChange(false)}
+              className={isMobile ? "w-full" : ""}
+            >
               Cancel
             </Button>
-            <Button type="submit" className="bg-eco-green" disabled={!amount || isLoading}>
+            <Button 
+              type="submit" 
+              className={`bg-eco-green ${isMobile ? "w-full" : ""}`} 
+              disabled={!amount || isLoading}
+            >
               {isLoading ? 'Processing...' : 'Confirm Investment'}
             </Button>
           </DialogFooter>
