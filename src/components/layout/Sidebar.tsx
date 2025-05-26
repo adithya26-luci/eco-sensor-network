@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -46,18 +47,6 @@ const Sidebar: React.FC = () => {
           ))}
         </ul>
       </nav>
-      
-      <div className="p-4 border-t">
-        <div className="flex items-center gap-2 px-3 py-2">
-          <div className="h-8 w-8 rounded-full bg-eco-teal flex items-center justify-center text-white font-medium">
-            EC
-          </div>
-          <div>
-            <p className="text-sm font-medium">ECOVATE Admin</p>
-            <p className="text-xs text-slate-500">admin@ecovate.com</p>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 };
