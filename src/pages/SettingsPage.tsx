@@ -1,18 +1,32 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { useUser } from '@/contexts/UserContext';
+import { toast } from '@/components/ui/sonner';
 
 const SettingsPage: React.FC = () => {
+  const { user, updateProfile } = useUser();
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [organization, setOrganization] = useState('ECOVATE Network');
+
+  const handleSaveProfile = () => {
+    if (user && name) {
+      updateProfile(name, user.profilePicture);
+      toast.success('Profile updated successfully');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">
-          Configure your EcoSensor Network
+          Configure your ECOVATE Network
         </p>
       </div>
       
@@ -26,20 +40,37 @@ const SettingsPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" defaultValue="EcoSensor Admin" />
+                <Input 
+                  id="name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your full name"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" defaultValue="admin@ecosensor.com" />
+                <Input 
+                  id="email" 
+                  type="email" 
+                  value={email}
+                  readOnly
+                  className="bg-gray-50"
+                />
               </div>
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="organization">Organization</Label>
-              <Input id="organization" defaultValue="EcoSensor Network" />
+              <Input 
+                id="organization" 
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
+              />
             </div>
             
-            <Button className="mt-2">Save Changes</Button>
+            <Button onClick={handleSaveProfile} className="mt-2 bg-eco-green hover:bg-eco-green/90">
+              Save Changes
+            </Button>
           </CardContent>
         </Card>
         
