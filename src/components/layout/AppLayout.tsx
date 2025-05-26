@@ -1,9 +1,12 @@
 
 import React, { ReactNode, useState } from 'react';
 import Sidebar from './Sidebar';
-import { Menu } from 'lucide-react';
+import { Menu, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useUser } from '@/contexts/UserContext';
+import AuthDialog from '@/components/auth/AuthDialog';
+import UserMenu from '@/components/auth/UserMenu';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -11,6 +14,8 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const { isAuthenticated } = useUser();
   const isMobile = useIsMobile();
   
   const toggleSidebar = () => {
@@ -33,21 +38,39 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         </div>
       )}
       <main className="flex-1 overflow-auto p-4 md:p-6">
-        {isMobile && (
-          <div className="mb-4">
+        <div className={`flex ${isMobile ? 'flex-col space-y-4' : 'items-center justify-between'} mb-4`}>
+          {isMobile && (
             <Button 
               variant="outline"
               size="icon"
-              className="h-10 w-10"
+              className="h-10 w-10 self-start"
               onClick={toggleSidebar}
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle Sidebar</span>
             </Button>
+          )}
+          <div className={`${isMobile ? 'self-end' : 'ml-auto'}`}>
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <Button 
+                onClick={() => setAuthDialogOpen(true)}
+                className="bg-eco-green hover:bg-eco-green/90"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            )}
           </div>
-        )}
+        </div>
         {children}
       </main>
+      
+      <AuthDialog 
+        open={authDialogOpen} 
+        onOpenChange={setAuthDialogOpen} 
+      />
     </div>
   );
 };
