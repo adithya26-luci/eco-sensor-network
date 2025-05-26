@@ -5,9 +5,10 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Camera, User } from 'lucide-react';
+import { Camera, User, Eye, EyeOff, Bot } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { toast } from '@/components/ui/sonner';
+import ChatbotWidget from '@/components/ChatbotWidget';
 
 const SettingsPage: React.FC = () => {
   const { user, updateProfile } = useUser();
@@ -15,6 +16,9 @@ const SettingsPage: React.FC = () => {
   const [email, setEmail] = useState(user?.email || '');
   const [organization, setOrganization] = useState('ECOVATE Network');
   const [profilePicture, setProfilePicture] = useState(user?.profilePicture || '');
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [showChatbot, setShowChatbot] = useState(false);
+  const [apiKey] = useState('sk_eco_abc123def456ghi789jkl012mno345pqr');
 
   const handleSaveProfile = () => {
     if (user && name) {
@@ -32,6 +36,10 @@ const SettingsPage: React.FC = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleRegenerateKey = () => {
+    toast.success('New API key generated successfully');
   };
 
   return (
@@ -116,9 +124,27 @@ const SettingsPage: React.FC = () => {
             <div className="space-y-2">
               <Label htmlFor="apiKey">API Key</Label>
               <div className="flex">
-                <Input id="apiKey" defaultValue="sk_eco_*****************" readOnly className="font-mono" />
-                <Button variant="outline" className="ml-2 whitespace-nowrap">Reveal</Button>
-                <Button variant="outline" className="ml-2 whitespace-nowrap">Regenerate</Button>
+                <Input 
+                  id="apiKey" 
+                  value={showApiKey ? apiKey : apiKey.replace(/./g, '*')}
+                  readOnly 
+                  className="font-mono" 
+                />
+                <Button 
+                  variant="outline" 
+                  className="ml-2 whitespace-nowrap"
+                  onClick={() => setShowApiKey(!showApiKey)}
+                >
+                  {showApiKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showApiKey ? 'Hide' : 'Reveal'}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="ml-2 whitespace-nowrap"
+                  onClick={handleRegenerateKey}
+                >
+                  Regenerate
+                </Button>
               </div>
               <p className="text-sm text-slate-500">Use this key to authenticate API requests</p>
             </div>
@@ -130,6 +156,37 @@ const SettingsPage: React.FC = () => {
             </div>
             
             <Button className="mt-2">Save Configuration</Button>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardHeader>
+            <CardTitle>AI Assistant</CardTitle>
+            <CardDescription>Chat with our AI assistant for help and support</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Enable Chatbot</div>
+                <div className="text-sm text-slate-500">Get instant help from our AI assistant</div>
+              </div>
+              <Switch 
+                checked={showChatbot}
+                onCheckedChange={setShowChatbot}
+              />
+            </div>
+            
+            {showChatbot && (
+              <div className="mt-4">
+                <Button 
+                  onClick={() => setShowChatbot(true)}
+                  className="bg-eco-green hover:bg-eco-green/90"
+                >
+                  <Bot className="h-4 w-4 mr-2" />
+                  Open Chat Assistant
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
         
@@ -173,6 +230,8 @@ const SettingsPage: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {showChatbot && <ChatbotWidget onClose={() => setShowChatbot(false)} />}
     </div>
   );
 };
