@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Camera, User } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { toast } from '@/components/ui/sonner';
 
@@ -13,11 +14,23 @@ const SettingsPage: React.FC = () => {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [organization, setOrganization] = useState('ECOVATE Network');
+  const [profilePicture, setProfilePicture] = useState(user?.profilePicture || '');
 
   const handleSaveProfile = () => {
     if (user && name) {
-      updateProfile(name, user.profilePicture);
+      updateProfile(name, profilePicture);
       toast.success('Profile updated successfully');
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfilePicture(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -37,6 +50,26 @@ const SettingsPage: React.FC = () => {
             <CardDescription>Manage your account information</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="relative">
+                <Avatar className="h-24 w-24">
+                  <AvatarImage src={profilePicture} />
+                  <AvatarFallback className="text-lg">
+                    {user?.name ? user.name.slice(0, 2).toUpperCase() : <User className="h-8 w-8" />}
+                  </AvatarFallback>
+                </Avatar>
+                <label className="absolute bottom-0 right-0 bg-eco-green rounded-full p-2 cursor-pointer hover:bg-eco-green/80">
+                  <Camera className="h-4 w-4 text-white" />
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    className="hidden" 
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              </div>
+            </div>
+            
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
