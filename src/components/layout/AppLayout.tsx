@@ -1,12 +1,13 @@
 
 import React, { ReactNode, useState } from 'react';
 import Sidebar from './Sidebar';
-import { Menu, LogIn } from 'lucide-react';
+import { Menu, LogIn, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUser } from '@/contexts/UserContext';
 import AuthDialog from '@/components/auth/AuthDialog';
 import UserMenu from '@/components/auth/UserMenu';
+import ChatbotWidget from '@/components/ChatbotWidget';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [chatbotOpen, setChatbotOpen] = useState(false);
   const { isAuthenticated } = useUser();
   const isMobile = useIsMobile();
   
@@ -66,6 +68,20 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         </div>
         {children}
       </main>
+      
+      {/* Global Chatbot Button */}
+      {!chatbotOpen && (
+        <Button
+          onClick={() => setChatbotOpen(true)}
+          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-eco-green hover:bg-eco-green/90 shadow-lg"
+          size="icon"
+        >
+          <Bot className="h-6 w-6 text-white" />
+          <span className="sr-only">Open Chat Assistant</span>
+        </Button>
+      )}
+      
+      {chatbotOpen && <ChatbotWidget onClose={() => setChatbotOpen(false)} />}
       
       <AuthDialog 
         open={authDialogOpen} 

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bot, User, X, Send } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -17,16 +18,34 @@ interface ChatbotWidgetProps {
 }
 
 const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
+  const location = useLocation();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m your ECOVATE AI assistant. How can I help you today?',
+      text: getWelcomeMessage(location.pathname),
       sender: 'bot',
       timestamp: new Date(),
     },
   ]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  function getWelcomeMessage(pathname: string): string {
+    switch (pathname) {
+      case '/':
+        return 'Hello! I\'m your ECOVATE AI assistant. I can help you understand your dashboard metrics, CO₂ readings, and carbon offset progress. What would you like to know?';
+      case '/sensors':
+        return 'Hi! I\'m here to help with sensor management. I can assist with sensor status, troubleshooting offline sensors, and understanding sensor data. How can I help?';
+      case '/map':
+        return 'Welcome! I can help you navigate the sensor map, understand location data, and interpret geographical CO₂ patterns. What would you like to explore?';
+      case '/analytics':
+        return 'Hello! I\'m here to help you understand your analytics data, trends, and reports. I can explain charts, metrics, and help you make sense of your environmental data.';
+      case '/settings':
+        return 'Hi! I can help you with account settings, API configuration, notifications, and profile management. What settings would you like to adjust?';
+      default:
+        return 'Hello! I\'m your ECOVATE AI assistant. How can I help you today?';
+    }
+  }
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
@@ -46,7 +65,7 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
     setTimeout(() => {
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputText),
+        text: getBotResponse(inputText, location.pathname),
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -56,19 +75,45 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
     }, 1000);
   };
 
-  const getBotResponse = (userInput: string): string => {
+  const getBotResponse = (userInput: string, pathname: string): string => {
     const input = userInput.toLowerCase();
     
+    // Page-specific responses
+    if (pathname === '/sensors') {
+      if (input.includes('offline') || input.includes('not working')) {
+        return 'To troubleshoot offline sensors: 1) Check the sensor status in the list, 2) Verify network connectivity, 3) Check power supply, 4) Contact support if issues persist. You can also enable notifications for sensor offline alerts in Settings.';
+      } else if (input.includes('add') || input.includes('new sensor')) {
+        return 'To add a new sensor, click the "Add Sensor" button on the sensors page. You\'ll need to provide the sensor ID, location, and configure its monitoring settings.';
+      }
+    } else if (pathname === '/analytics') {
+      if (input.includes('chart') || input.includes('graph')) {
+        return 'The analytics charts show CO₂ trends over time. Hover over data points for specific values, use the time range selector to adjust the view, and download reports using the export button.';
+      } else if (input.includes('export') || input.includes('download')) {
+        return 'You can export your analytics data in CSV or PDF format using the export buttons above the charts. This includes historical data, trends, and summary reports.';
+      }
+    } else if (pathname === '/map') {
+      if (input.includes('location') || input.includes('sensor location')) {
+        return 'Sensors are displayed as colored markers on the map. Green indicates normal levels, yellow shows moderate levels, and red indicates high CO₂ concentrations. Click on any marker for detailed information.';
+      }
+    } else if (pathname === '/settings') {
+      if (input.includes('api')) {
+        return 'Your API key is in the API Configuration section. Use the reveal button to show it, and you can regenerate it if needed. Remember to update any applications using the old key.';
+      } else if (input.includes('notification')) {
+        return 'You can configure email alerts, daily reports, and threshold notifications in the Notification Preferences section. Toggle each option based on your needs.';
+      }
+    }
+    
+    // General responses
     if (input.includes('co2') || input.includes('carbon')) {
-      return 'I can help you with CO₂ monitoring! Our sensors track carbon dioxide levels in real-time. You can view current readings on the dashboard or check historical data in the analytics section.';
+      return 'I can help you with CO₂ monitoring! Our sensors track carbon dioxide levels in real-time. You can view current readings on the dashboard, check historical data in analytics, or see geographical patterns on the map.';
     } else if (input.includes('sensor')) {
-      return 'Our sensor network monitors various environmental parameters. You can manage sensors from the Sensors page, view their status, and configure alerts for when they go offline.';
-    } else if (input.includes('api')) {
-      return 'You can find your API key in the Settings page under API Configuration. Use it to authenticate requests to our API endpoints for programmatic access to your data.';
+      return 'Our sensor network monitors environmental parameters continuously. Visit the Sensors page to manage devices, check their status, and configure alerts for when they go offline.';
+    } else if (input.includes('dashboard')) {
+      return 'The dashboard shows your key metrics: current CO₂ levels, sensor status, carbon offset progress, and recent trends. Each card provides insights into different aspects of your environmental monitoring.';
     } else if (input.includes('help') || input.includes('support')) {
-      return 'I\'m here to help! You can ask me about CO₂ monitoring, sensor management, API usage, or any other ECOVATE features. What would you like to know?';
+      return 'I\'m here to help! I can assist with navigation, explain features, troubleshoot issues, and guide you through using ECOVATE. What specific area would you like help with?';
     } else {
-      return 'Thanks for your message! I can help you with CO₂ monitoring, sensor management, API configuration, and general ECOVATE questions. What would you like to know more about?';
+      return 'Thanks for your message! I can help you with CO₂ monitoring, sensor management, analytics interpretation, map navigation, and system settings. What would you like to know more about?';
     }
   };
 
