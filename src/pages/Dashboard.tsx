@@ -6,6 +6,7 @@ import CO2Chart from '@/components/dashboard/CO2Chart';
 import SensorStatus from '@/components/dashboard/SensorStatus';
 import CarbonOffsetTable from '@/components/dashboard/CarbonOffsetTable';
 import ProgressCard from '@/components/dashboard/ProgressCard';
+import CarbonCreditsCalculator from '@/components/dashboard/CarbonCreditsCalculator';
 import { mockSensors, mockOffsets, mockDashboardStats, generateHistoricalData } from '@/lib/mockData';
 
 const Dashboard: React.FC = () => {
@@ -65,9 +66,9 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-        <div className="md:col-span-2">
-          <CarbonOffsetTable offsets={mockOffsets} />
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <CarbonCreditsCalculator />
         </div>
         <div>
           <ProgressCard 
@@ -76,6 +77,12 @@ const Dashboard: React.FC = () => {
             maxValue={100}
             unit="%"
           />
+        </div>
+      </div>
+      
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+        <div className="md:col-span-2">
+          <CarbonOffsetTable offsets={mockOffsets} />
         </div>
       </div>
     </div>
