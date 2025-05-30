@@ -35,52 +35,84 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    try {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        const parsedUser = JSON.parse(savedUser);
+        setUser(parsedUser);
+      }
+    } catch (error) {
+      console.error('Error loading saved user:', error);
+      localStorage.removeItem('user');
     }
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Simulate API call
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const foundUser = users.find((u: any) => u.email === email && u.password === password);
-    
-    if (foundUser) {
-      const userWithoutPassword = { ...foundUser };
-      delete userWithoutPassword.password;
-      setUser(userWithoutPassword);
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      return true;
+    try {
+      if (!email || !password) {
+        return false;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const foundUser = users.find((u: any) => 
+        u.email?.toLowerCase() === email.toLowerCase() && u.password === password
+      );
+      
+      if (foundUser) {
+        const userWithoutPassword = { 
+          id: foundUser.id,
+          email: foundUser.email,
+          name: foundUser.name,
+          profilePicture: foundUser.profilePicture
+        };
+        setUser(userWithoutPassword);
+        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
     }
-    return false;
   };
 
   const register = async (email: string, password: string, name: string, profilePicture?: string): Promise<boolean> => {
-    // Simulate API call
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const existingUser = users.find((u: any) => u.email === email);
-    
-    if (existingUser) {
-      return false; // User already exists
+    try {
+      if (!email || !password || !name) {
+        return false;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const existingUser = users.find((u: any) => u.email?.toLowerCase() === email.toLowerCase());
+      
+      if (existingUser) {
+        return false; // User already exists
+      }
+
+      const newUser = {
+        id: Date.now().toString(),
+        email: email.toLowerCase(),
+        password,
+        name,
+        profilePicture
+      };
+
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+
+      const userWithoutPassword = {
+        id: newUser.id,
+        email: newUser.email,
+        name: newUser.name,
+        profilePicture: newUser.profilePicture
+      };
+      setUser(userWithoutPassword);
+      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+      return true;
+    } catch (error) {
+      console.error('Registration error:', error);
+      return false;
     }
-
-    const newUser = {
-      id: Date.now().toString(),
-      email,
-      password,
-      name,
-      profilePicture
-    };
-
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    const userWithoutPassword = { ...newUser };
-    delete userWithoutPassword.password;
-    setUser(userWithoutPassword);
-    localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-    return true;
   };
 
   const logout = () => {
@@ -95,11 +127,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(updatedUser));
       
       // Update in users array
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const userIndex = users.findIndex((u: any) => u.id === user.id);
-      if (userIndex !== -1) {
-        users[userIndex] = { ...users[userIndex], name, profilePicture };
-        localStorage.setItem('users', JSON.stringify(users));
+      try {
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex((u: any) => u.id === user.id);
+        if (userIndex !== -1) {
+          users[userIndex] = { ...users[userIndex], name, profilePicture };
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+      } catch (error) {
+        console.error('Error updating user in users array:', error);
       }
     }
   };
