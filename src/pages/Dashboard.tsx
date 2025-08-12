@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { GaugeIcon, LeafIcon, TreePineIcon, BarChartIcon } from 'lucide-react';
+import { GaugeIcon, LeafIcon, TreePineIcon, BarChartIcon, Brain } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import StatusCard from '@/components/dashboard/StatusCard';
 import CO2Chart from '@/components/dashboard/CO2Chart';
 import SensorStatus from '@/components/dashboard/SensorStatus';
@@ -8,6 +9,9 @@ import CarbonOffsetTable from '@/components/dashboard/CarbonOffsetTable';
 import ProgressCard from '@/components/dashboard/ProgressCard';
 import CarbonCreditsCalculator from '@/components/dashboard/CarbonCreditsCalculator';
 import CarbonEmissionCalculator from '@/components/dashboard/CarbonEmissionCalculator';
+import AIInsights from '@/components/ai/AIInsights';
+import SmartRecommendations from '@/components/ai/SmartRecommendations';
+import PredictiveAnalytics from '@/components/ai/PredictiveAnalytics';
 import { mockSensors, mockOffsets, mockDashboardStats, generateHistoricalData } from '@/lib/mockData';
 
 const Dashboard: React.FC = () => {
@@ -23,10 +27,11 @@ const Dashboard: React.FC = () => {
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Carbon Offset Dashboard</h1>
         <p className="text-muted-foreground">
-          Monitor your environmental impact and carbon offset projects.
+          Monitor your environmental impact and carbon offset projects with AI-powered insights.
         </p>
       </div>
       
+      {/* Status Cards */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <StatusCard 
           title="Total CO₂ Reduced" 
@@ -53,38 +58,85 @@ const Dashboard: React.FC = () => {
           trend={{ value: 2.3, isPositive: false }}
         />
       </div>
-      
-      <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <CO2Chart 
-            data={sensorData.slice(0, 48)} 
-            title="CO₂ Levels (Last 48 Hours)"
-            description="Parts per million (PPM)"
+
+      {/* AI-Enhanced Content */}
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="ai-insights">
+            <Brain className="h-4 w-4 mr-2" />
+            AI Insights
+          </TabsTrigger>
+          <TabsTrigger value="predictions">Predictions</TabsTrigger>
+          <TabsTrigger value="recommendations">Smart Tips</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-6">
+          <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <CO2Chart 
+                data={sensorData.slice(0, 48)} 
+                title="CO₂ Levels (Last 48 Hours)"
+                description="Parts per million (PPM)"
+              />
+            </div>
+            <div>
+              <SensorStatus sensors={mockSensors} />
+            </div>
+          </div>
+          
+          <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+            <CarbonCreditsCalculator />
+            <CarbonEmissionCalculator />
+          </div>
+          
+          <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <CarbonOffsetTable offsets={mockOffsets} />
+            </div>
+            <div>
+              <ProgressCard 
+                title="Carbon Neutral Progress"
+                currentValue={mockDashboardStats.carbonNeutralProgress} 
+                maxValue={100}
+                unit="%"
+              />
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="ai-insights" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <AIInsights 
+              co2Data={sensorData.map(d => d.value)} 
+              sensorData={mockSensors}
+            />
+            <SmartRecommendations />
+          </div>
+        </TabsContent>
+
+        <TabsContent value="predictions" className="space-y-6">
+          <PredictiveAnalytics 
+            historicalData={sensorData}
+            timeframe="30d"
+            metric="co2"
           />
-        </div>
-        <div>
-          <SensorStatus sensors={mockSensors} />
-        </div>
-      </div>
-      
-      <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
-        <CarbonCreditsCalculator />
-        <CarbonEmissionCalculator />
-      </div>
-      
-      <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <CarbonOffsetTable offsets={mockOffsets} />
-        </div>
-        <div>
-          <ProgressCard 
-            title="Carbon Neutral Progress"
-            currentValue={mockDashboardStats.carbonNeutralProgress} 
-            maxValue={100}
-            unit="%"
-          />
-        </div>
-      </div>
+        </TabsContent>
+
+        <TabsContent value="recommendations" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <SmartRecommendations />
+            </div>
+            <div>
+              <AIInsights 
+                co2Data={sensorData.map(d => d.value)} 
+                sensorData={mockSensors}
+              />
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

@@ -78,42 +78,53 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
   const getBotResponse = (userInput: string, pathname: string): string => {
     const input = userInput.toLowerCase();
     
+    // AI and Machine Learning responses
+    if (input.includes('ai') || input.includes('artificial intelligence') || input.includes('machine learning')) {
+      return 'Our AI-powered features include predictive analytics for CO₂ trends, personalized carbon reduction recommendations, anomaly detection for sensors, and smart insights based on your usage patterns. Check the AI Insights tab on your dashboard!';
+    } else if (input.includes('prediction') || input.includes('forecast')) {
+      return 'Our AI models analyze historical data to predict future CO₂ levels, energy consumption patterns, and carbon offset opportunities. Predictions include confidence intervals and are updated regularly. Visit the Predictions tab for detailed forecasts.';
+    } else if (input.includes('recommendation') || input.includes('suggest')) {
+      return 'AI generates personalized recommendations based on your carbon footprint, location, and behavior patterns. These include transport alternatives, energy efficiency tips, and investment opportunities. Check the Smart Tips tab!';
+    } else if (input.includes('insight') || input.includes('analysis')) {
+      return 'AI continuously analyzes your environmental data to provide actionable insights. This includes trend detection, anomaly alerts, optimization opportunities, and impact predictions. All insights include confidence scores.';
+    }
+    
     // Page-specific responses
     if (pathname === '/sensors') {
       if (input.includes('offline') || input.includes('not working')) {
-        return 'To troubleshoot offline sensors: 1) Check the sensor status in the list, 2) Verify network connectivity, 3) Check power supply, 4) Contact support if issues persist. You can also enable notifications for sensor offline alerts in Settings.';
+        return 'Our AI can detect sensor anomalies and predict failures before they happen. To troubleshoot: 1) Check AI alerts for sensor health predictions, 2) Verify network connectivity, 3) Check power supply, 4) Review anomaly detection reports.';
       } else if (input.includes('add') || input.includes('new sensor')) {
-        return 'To add a new sensor, click the "Add Sensor" button on the sensors page. You\'ll need to provide the sensor ID, location, and configure its monitoring settings.';
+        return 'To add a new sensor, click "Add Sensor" and our AI will help optimize placement based on your location and existing sensor network for maximum coverage and accuracy.';
       }
     } else if (pathname === '/analytics') {
       if (input.includes('chart') || input.includes('graph')) {
-        return 'The analytics charts show CO₂ trends over time. Hover over data points for specific values, use the time range selector to adjust the view, and download reports using the export button.';
+        return 'Analytics charts now include AI-powered trend analysis, predictive overlays, and smart annotations. Hover over data points for AI-generated insights, confidence intervals, and future projections.';
       } else if (input.includes('export') || input.includes('download')) {
-        return 'You can export your analytics data in CSV or PDF format using the export buttons above the charts. This includes historical data, trends, and summary reports.';
+        return 'Export includes raw data plus AI insights, predictions, and recommendations. Available formats: CSV with AI annotations, PDF reports with predictive analysis, and JSON with full AI metadata.';
       }
     } else if (pathname === '/map') {
       if (input.includes('location') || input.includes('sensor location')) {
-        return 'Sensors are displayed as colored markers on the map. Green indicates normal levels, yellow shows moderate levels, and red indicates high CO₂ concentrations. Click on any marker for detailed information.';
+        return 'The map uses AI to identify optimal sensor placement, predict pollution hotspots, and recommend coverage improvements. AI-powered heat maps show predicted CO₂ concentrations and trend patterns.';
       }
     } else if (pathname === '/settings') {
       if (input.includes('api')) {
-        return 'Your API key is in the API Configuration section. Use the reveal button to show it, and you can regenerate it if needed. Remember to update any applications using the old key.';
+        return 'API access includes endpoints for AI predictions, recommendations, and insights. Use the AI API to integrate our machine learning capabilities into your applications.';
       } else if (input.includes('notification')) {
-        return 'You can configure email alerts, daily reports, and threshold notifications in the Notification Preferences section. Toggle each option based on your needs.';
+        return 'AI-powered notifications include smart alerts based on prediction confidence, personalized timing, and contextual relevance. Configure AI alert sensitivity in notification preferences.';
       }
     }
     
     // General responses
     if (input.includes('co2') || input.includes('carbon')) {
-      return 'I can help you with CO₂ monitoring! Our sensors track carbon dioxide levels in real-time. You can view current readings on the dashboard, check historical data in analytics, or see geographical patterns on the map.';
+      return 'Our AI continuously monitors CO₂ patterns, predicts future levels, and suggests optimal reduction strategies. The system learns from your data to provide increasingly accurate forecasts and personalized recommendations.';
     } else if (input.includes('sensor')) {
-      return 'Our sensor network monitors environmental parameters continuously. Visit the Sensors page to manage devices, check their status, and configure alerts for when they go offline.';
+      return 'AI monitors sensor health, predicts maintenance needs, and optimizes data collection patterns. Smart algorithms detect anomalies, calibration drift, and network optimization opportunities.';
     } else if (input.includes('dashboard')) {
-      return 'The dashboard shows your key metrics: current CO₂ levels, sensor status, carbon offset progress, and recent trends. Each card provides insights into different aspects of your environmental monitoring.';
+      return 'The dashboard features AI-powered insights including predictive analytics, smart recommendations, trend analysis, and personalized optimization suggestions. Each metric includes AI-generated context and forecasts.';
     } else if (input.includes('help') || input.includes('support')) {
-      return 'I\'m here to help! I can assist with navigation, explain features, troubleshoot issues, and guide you through using ECOVATE. What specific area would you like help with?';
+      return 'I\'m your AI assistant powered by advanced machine learning! I can help with predictions, recommendations, data analysis, and explaining our AI features. What would you like to explore?';
     } else {
-      return 'Thanks for your message! I can help you with CO₂ monitoring, sensor management, analytics interpretation, map navigation, and system settings. What would you like to know more about?';
+      return 'I\'m enhanced with AI capabilities! I can help with predictive analytics, smart recommendations, anomaly detection, and optimization strategies. Try asking about AI insights, predictions, or personalized tips!';
     }
   };
 
