@@ -6,7 +6,7 @@ import { BarChartIcon, GaugeIcon, MapPinIcon, LeafIcon, SettingsIcon } from 'luc
 
 const navigationItems = [
   { name: 'Dashboard', icon: <GaugeIcon className="h-5 w-5" />, path: '/' },
-  { name: 'Sensors', icon: <LeafIcon className="h-5 w-5" />, path: '/sensors' },
+  { name: 'Projects', icon: <LeafIcon className="h-5 w-5" />, path: '/projects' },
   { name: 'Map', icon: <MapPinIcon className="h-5 w-5" />, path: '/map' },
   { name: 'Analytics', icon: <BarChartIcon className="h-5 w-5" />, path: '/analytics' },
   { name: 'Settings', icon: <SettingsIcon className="h-5 w-5" />, path: '/settings' },

@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import SensorsPage from "./pages/SensorsPage";
+import ProjectsPage from "./pages/ProjectsPage";
 import MapPage from "./pages/MapPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -25,9 +25,9 @@ const App: React.FC = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/sensors" element={
+            <Route path="/projects" element={
               <AppLayout>
-                <SensorsPage />
+                <ProjectsPage />
               </AppLayout>
             } />
             <Route path="/map" element={

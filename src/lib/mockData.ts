@@ -1,14 +1,14 @@
-
 import { Sensor, Co2Reading, CarbonOffset, DashboardStats } from '@/types';
 
+// CO2 Sensors - focused only on carbon dioxide monitoring
 export const mockSensors: Sensor[] = [
   {
-    id: 'sensor-001',
-    name: 'Forest Edge Sensor',
+    id: 'co2-sensor-001',
+    name: 'Forest CO₂ Monitor',
     location: {
       lat: 37.7749,
       lng: -122.4194,
-      name: 'San Francisco Forest'
+      name: 'San Francisco Forest Conservation Area'
     },
     status: 'online',
     lastReading: {
@@ -17,12 +17,12 @@ export const mockSensors: Sensor[] = [
     }
   },
   {
-    id: 'sensor-002',
-    name: 'Urban Park Monitor',
+    id: 'co2-sensor-002',
+    name: 'Urban CO₂ Tracker',
     location: {
       lat: 40.7128,
       lng: -74.0060,
-      name: 'Central Park'
+      name: 'Central Park Reforestation Zone'
     },
     status: 'online',
     lastReading: {
@@ -31,12 +31,12 @@ export const mockSensors: Sensor[] = [
     }
   },
   {
-    id: 'sensor-003',
-    name: 'Lakeside Tracker',
+    id: 'co2-sensor-003',
+    name: 'Wind Farm CO₂ Monitor',
     location: {
       lat: 41.8781,
       lng: -87.6298,
-      name: 'Lake Michigan Shore'
+      name: 'Lake Michigan Wind Project'
     },
     status: 'maintenance',
     lastReading: {
@@ -45,12 +45,12 @@ export const mockSensors: Sensor[] = [
     }
   },
   {
-    id: 'sensor-004',
-    name: 'Mountain Ridge Sensor',
+    id: 'co2-sensor-004',
+    name: 'Carbon Capture CO₂ Sensor',
     location: {
       lat: 39.7392,
       lng: -104.9903,
-      name: 'Rocky Mountain Edge'
+      name: 'Rocky Mountain Carbon Facility'
     },
     status: 'offline',
     lastReading: {
@@ -59,12 +59,12 @@ export const mockSensors: Sensor[] = [
     }
   },
   {
-    id: 'sensor-005',
-    name: 'Coastal Monitor',
+    id: 'co2-sensor-005',
+    name: 'Coastal Restoration CO₂ Monitor',
     location: {
       lat: 34.0522,
       lng: -118.2437,
-      name: 'Santa Monica Pier'
+      name: 'Santa Monica Marine Conservation'
     },
     status: 'online',
     lastReading: {
@@ -75,7 +75,7 @@ export const mockSensors: Sensor[] = [
 ];
 
 // Generate historical CO2 data for the last 7 days
-export const generateHistoricalData = (sensorId: string): Co2Reading[] => {
+export const generateHistoricalData = (sensorId: string = 'co2-sensor-001'): Co2Reading[] => {
   const data: Co2Reading[] = [];
   const now = Date.now();
   const baseValue = 400 + Math.floor(Math.random() * 30);
@@ -140,4 +140,12 @@ export const mockDashboardStats: DashboardStats = {
   activeSensors: 4,
   totalProjects: 5,
   carbonNeutralProgress: 68
+};
+
+// For backward compatibility
+export const mockCarbonOffsets = mockOffsets;
+export const mockProgressData = {
+  current: mockDashboardStats.carbonNeutralProgress,
+  target: 100,
+  trend: 'up'
 };
