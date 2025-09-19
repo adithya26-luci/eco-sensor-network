@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calculator, AlertTriangle } from 'lucide-react';
+import { useUserData } from '@/contexts/UserDataContext';
 
 interface EmissionActivity {
   type: string;
@@ -15,10 +16,15 @@ interface EmissionActivity {
 }
 
 const CarbonEmissionCalculator: React.FC = () => {
+  const { userData, updateEmissions } = useUserData();
   const [activities, setActivities] = useState<EmissionActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState('');
   const [amount, setAmount] = useState('');
-  const [totalEmissions, setTotalEmissions] = useState(0);
+  const [totalEmissions, setTotalEmissions] = useState(userData.calculatedEmissions);
+
+  useEffect(() => {
+    setTotalEmissions(userData.calculatedEmissions);
+  }, [userData.calculatedEmissions]);
 
   const activityTypes = {
     'car-travel': { name: 'Car Travel', unit: 'km', emissionFactor: 0.21 },
@@ -45,7 +51,9 @@ const CarbonEmissionCalculator: React.FC = () => {
     
     // Calculate emissions
     const emissions = newActivity.amount * newActivity.emissionFactor;
-    setTotalEmissions(prev => prev + emissions);
+    const newTotal = totalEmissions + emissions;
+    setTotalEmissions(newTotal);
+    updateEmissions(newTotal);
     
     setSelectedActivity('');
     setAmount('');
@@ -54,6 +62,7 @@ const CarbonEmissionCalculator: React.FC = () => {
   const clearCalculations = () => {
     setActivities([]);
     setTotalEmissions(0);
+    updateEmissions(0);
   };
 
   return (

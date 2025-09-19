@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calculator, Leaf } from 'lucide-react';
+import { useUserData } from '@/contexts/UserDataContext';
 
 interface Activity {
   type: string;
@@ -15,10 +16,15 @@ interface Activity {
 }
 
 const CarbonCreditsCalculator: React.FC = () => {
+  const { userData, updateCredits } = useUserData();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState('');
   const [amount, setAmount] = useState('');
-  const [totalCredits, setTotalCredits] = useState(0);
+  const [totalCredits, setTotalCredits] = useState(userData.creditsPurchased);
+
+  useEffect(() => {
+    setTotalCredits(userData.creditsPurchased);
+  }, [userData.creditsPurchased]);
 
   const activityTypes = {
     'solar-energy': { name: 'Solar Energy', unit: 'kWh', carbonFactor: -0.5 },
@@ -45,7 +51,9 @@ const CarbonCreditsCalculator: React.FC = () => {
     
     // Calculate total credits (negative values are credits)
     const credits = Math.abs(newActivity.amount * newActivity.carbonFactor);
-    setTotalCredits(prev => prev + credits);
+    const newTotal = totalCredits + credits;
+    setTotalCredits(newTotal);
+    updateCredits(newTotal);
     
     setSelectedActivity('');
     setAmount('');
@@ -54,6 +62,7 @@ const CarbonCreditsCalculator: React.FC = () => {
   const clearCalculations = () => {
     setActivities([]);
     setTotalCredits(0);
+    updateCredits(0);
   };
 
   return (

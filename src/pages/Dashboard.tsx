@@ -12,9 +12,11 @@ import CarbonEmissionCalculator from '@/components/dashboard/CarbonEmissionCalcu
 import AIInsights from '@/components/ai/AIInsights';
 import SmartRecommendations from '@/components/ai/SmartRecommendations';
 import PredictiveAnalytics from '@/components/ai/PredictiveAnalytics';
-import { mockSensors, mockOffsets, mockDashboardStats, generateHistoricalData } from '@/lib/mockData';
+import { mockSensors, generateHistoricalData } from '@/lib/mockData';
+import { useUserData } from '@/contexts/UserDataContext';
 
 const Dashboard: React.FC = () => {
+  const { userData } = useUserData();
   // For demo, we'll show data from the first sensor
   const [selectedSensorId] = useState(mockSensors[0].id);
   const sensorData = generateHistoricalData(selectedSensorId);
@@ -35,9 +37,9 @@ const Dashboard: React.FC = () => {
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <StatusCard 
           title="Total CO₂ Reduced" 
-          value={`${mockDashboardStats.totalCo2Reduced} tons`}
+          value={`${userData.dashboardStats.totalCo2Reduced} tons`}
           icon={<LeafIcon className="h-4 w-4 text-eco-green" />}
-          trend={{ value: 12.5, isPositive: true }}
+          trend={userData.dashboardStats.totalCo2Reduced > 0 ? { value: 12.5, isPositive: true } : undefined}
         />
         <StatusCard 
           title="Active Sensors" 
@@ -47,7 +49,7 @@ const Dashboard: React.FC = () => {
         />
         <StatusCard 
           title="Projects" 
-          value={mockDashboardStats.totalProjects}
+          value={userData.dashboardStats.totalProjects}
           icon={<TreePineIcon className="h-4 w-4 text-eco-green" />}
         />
         <StatusCard 
@@ -92,12 +94,12 @@ const Dashboard: React.FC = () => {
           
           <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <CarbonOffsetTable offsets={mockOffsets} />
+              <CarbonOffsetTable offsets={userData.carbonOffsets} />
             </div>
             <div>
               <ProgressCard 
                 title="Carbon Neutral Progress"
-                currentValue={mockDashboardStats.carbonNeutralProgress} 
+                currentValue={userData.dashboardStats.carbonNeutralProgress} 
                 maxValue={100}
                 unit="%"
               />
