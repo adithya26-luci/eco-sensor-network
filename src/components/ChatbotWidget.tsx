@@ -33,7 +33,7 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
   function getWelcomeMessage(pathname: string): string {
     switch (pathname) {
       case '/':
-        return 'Hello! I\'m your ECOVATE AI assistant. I can help you understand your dashboard metrics, CO₂ readings, and carbon offset progress. What would you like to know?';
+        return 'Hello! I\'m your EcoTracker assistant. I can help you understand your dashboard metrics, CO₂ readings, and carbon offset progress. What would you like to know?';
       case '/sensors':
         return 'Hi! I\'m here to help with sensor management. I can assist with sensor status, troubleshooting offline sensors, and understanding sensor data. How can I help?';
       case '/map':
@@ -41,9 +41,9 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
       case '/analytics':
         return 'Hello! I\'m here to help you understand your analytics data, trends, and reports. I can explain charts, metrics, and help you make sense of your environmental data.';
       case '/settings':
-        return 'Hi! I can help you with account settings, API configuration, notifications, and profile management. What settings would you like to adjust?';
+        return 'Hi! I can help you with account settings, configuration, notifications, and profile management. What settings would you like to adjust?';
       default:
-        return 'Hello! I\'m your ECOVATE AI assistant. How can I help you today?';
+        return 'Hello! I\'m your EcoTracker assistant. How can I help you today?';
     }
   }
 
@@ -78,53 +78,53 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
   const getBotResponse = (userInput: string, pathname: string): string => {
     const input = userInput.toLowerCase();
     
-    // AI and Machine Learning responses
-    if (input.includes('ai') || input.includes('artificial intelligence') || input.includes('machine learning')) {
-      return 'Our AI-powered features include predictive analytics for CO₂ trends, personalized carbon reduction recommendations, anomaly detection for sensors, and smart insights based on your usage patterns. Check the AI Insights tab on your dashboard!';
-    } else if (input.includes('prediction') || input.includes('forecast')) {
-      return 'Our AI models analyze historical data to predict future CO₂ levels, energy consumption patterns, and carbon offset opportunities. Predictions include confidence intervals and are updated regularly. Visit the Predictions tab for detailed forecasts.';
-    } else if (input.includes('recommendation') || input.includes('suggest')) {
-      return 'AI generates personalized recommendations based on your carbon footprint, location, and behavior patterns. These include transport alternatives, energy efficiency tips, and investment opportunities. Check the Smart Tips tab!';
-    } else if (input.includes('insight') || input.includes('analysis')) {
-      return 'AI continuously analyzes your environmental data to provide actionable insights. This includes trend detection, anomaly alerts, optimization opportunities, and impact predictions. All insights include confidence scores.';
+    // Analytics and tracking responses
+    if (input.includes('analytics') || input.includes('data') || input.includes('trends')) {
+      return "Our platform provides detailed analytics to help you understand your carbon footprint and track your progress over time.";
+    } else if (input.includes('reports') || input.includes('reporting')) {
+      return "Generate comprehensive reports on your carbon reduction activities and environmental impact for stakeholders.";
+    } else if (input.includes('tracking') || input.includes('monitoring')) {
+      return "Monitor your carbon footprint trends and see how your actions contribute to environmental sustainability.";
+    } else if (input.includes('insights') || input.includes('analysis')) {
+      return "Get detailed analysis of your environmental data to identify patterns and opportunities for improvement.";
     }
     
     // Page-specific responses
     if (pathname === '/sensors') {
       if (input.includes('offline') || input.includes('not working')) {
-        return 'Our AI can detect sensor anomalies and predict failures before they happen. To troubleshoot: 1) Check AI alerts for sensor health predictions, 2) Verify network connectivity, 3) Check power supply, 4) Review anomaly detection reports.';
+        return 'To troubleshoot sensor issues: 1) Check network connectivity, 2) Verify power supply, 3) Review sensor status, 4) Contact support if needed.';
       } else if (input.includes('add') || input.includes('new sensor')) {
-        return 'To add a new sensor, click "Add Sensor" and our AI will help optimize placement based on your location and existing sensor network for maximum coverage and accuracy.';
+        return 'To add a new sensor, click "Add Sensor" and follow the setup guide for optimal placement and configuration.';
       }
     } else if (pathname === '/analytics') {
       if (input.includes('chart') || input.includes('graph')) {
-        return 'Analytics charts now include AI-powered trend analysis, predictive overlays, and smart annotations. Hover over data points for AI-generated insights, confidence intervals, and future projections.';
+        return 'Analytics charts show your environmental data trends with clear visualizations. Hover over data points for detailed information about specific time periods.';
       } else if (input.includes('export') || input.includes('download')) {
-        return 'Export includes raw data plus AI insights, predictions, and recommendations. Available formats: CSV with AI annotations, PDF reports with predictive analysis, and JSON with full AI metadata.';
+        return 'Export your data in multiple formats: CSV for spreadsheets, PDF for reports, and JSON for technical integration.';
       }
     } else if (pathname === '/map') {
       if (input.includes('location') || input.includes('sensor location')) {
-        return 'The map uses AI to identify optimal sensor placement, predict pollution hotspots, and recommend coverage improvements. AI-powered heat maps show predicted CO₂ concentrations and trend patterns.';
+        return 'The map shows all your sensor locations with real-time status indicators. Click on any sensor marker to view detailed information.';
       }
     } else if (pathname === '/settings') {
       if (input.includes('api')) {
-        return 'API access includes endpoints for AI predictions, recommendations, and insights. Use the AI API to integrate our machine learning capabilities into your applications.';
+        return 'Configure API access to integrate your carbon tracking data with other applications and services.';
       } else if (input.includes('notification')) {
-        return 'AI-powered notifications include smart alerts based on prediction confidence, personalized timing, and contextual relevance. Configure AI alert sensitivity in notification preferences.';
+        return 'Set up notifications for important events like sensor alerts, goal achievements, and regular reports.';
       }
     }
     
     // General responses
     if (input.includes('co2') || input.includes('carbon')) {
-      return 'Our AI continuously monitors CO₂ patterns, predicts future levels, and suggests optimal reduction strategies. The system learns from your data to provide increasingly accurate forecasts and personalized recommendations.';
+      return 'Track your CO₂ levels and carbon footprint with real-time monitoring and historical data analysis to help you make informed environmental decisions.';
     } else if (input.includes('sensor')) {
-      return 'AI monitors sensor health, predicts maintenance needs, and optimizes data collection patterns. Smart algorithms detect anomalies, calibration drift, and network optimization opportunities.';
+      return 'Monitor sensor health and status through the dashboard. Get alerts for maintenance needs and optimize your monitoring network.';
     } else if (input.includes('dashboard')) {
-      return 'The dashboard features AI-powered insights including predictive analytics, smart recommendations, trend analysis, and personalized optimization suggestions. Each metric includes AI-generated context and forecasts.';
+      return 'The dashboard provides an overview of your environmental metrics including CO₂ levels, carbon credits, and progress toward your sustainability goals.';
     } else if (input.includes('help') || input.includes('support')) {
-      return 'I\'m your AI assistant powered by advanced machine learning! I can help with predictions, recommendations, data analysis, and explaining our AI features. What would you like to explore?';
+      return 'I\'m here to help! I can assist with understanding your data, navigating the platform, and answering questions about carbon tracking. What would you like to know?';
     } else {
-      return 'I\'m enhanced with AI capabilities! I can help with predictive analytics, smart recommendations, anomaly detection, and optimization strategies. Try asking about AI insights, predictions, or personalized tips!';
+      return 'I can help you with carbon tracking, sensor management, data analysis, and environmental monitoring. Feel free to ask about any feature or need assistance with your sustainability goals!';
     }
   };
 
@@ -140,8 +140,8 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
       <Card className="w-80 h-96 shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium flex items-center">
-            <Bot className="h-4 w-4 mr-2 text-eco-green" />
-            ECOVATE Assistant
+            <Bot className="h-4 w-4 mr-2 text-green-600" />
+            EcoTracker Help
           </CardTitle>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-4 w-4" />
@@ -155,15 +155,15 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] p-2 rounded-lg text-sm ${
+                  className={`max-w-[80%] p-3 rounded-2xl text-sm ${
                     message.sender === 'user'
-                      ? 'bg-eco-green text-white'
-                      : 'bg-gray-100 text-gray-900'
+                      ? 'bg-green-600 text-white ml-auto'
+                      : 'bg-gray-100 text-gray-800'
                   }`}
                 >
                   <div className="flex items-start space-x-2">
                     {message.sender === 'bot' && (
-                      <Bot className="h-3 w-3 mt-0.5 text-eco-green" />
+                      <Bot className="h-3 w-3 mt-0.5 text-green-600" />
                     )}
                     {message.sender === 'user' && (
                       <User className="h-3 w-3 mt-0.5 text-white" />
@@ -175,8 +175,8 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 p-2 rounded-lg text-sm">
-                  <Bot className="h-3 w-3 animate-pulse text-eco-green" />
+                <div className="bg-gray-100 p-3 rounded-2xl text-sm">
+                  <Bot className="h-3 w-3 animate-pulse text-green-600" />
                   <span className="ml-2">Typing...</span>
                 </div>
               </div>
@@ -195,7 +195,7 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({ onClose }) => {
                 onClick={handleSendMessage}
                 disabled={isLoading || !inputText.trim()}
                 size="sm"
-                className="bg-eco-green hover:bg-eco-green/90"
+                className="bg-green-600 hover:bg-green-700 text-white rounded-xl"
               >
                 <Send className="h-4 w-4" />
               </Button>
