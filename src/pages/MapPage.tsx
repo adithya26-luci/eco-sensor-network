@@ -37,7 +37,7 @@ const MapPage: React.FC = () => {
                   key={sensor.id}
                   style={{ left: `${left}%`, top: `${top}%` }}
                   className={`absolute w-4 h-4 rounded-full -ml-2 -mt-2 border-2 border-white ${
-                    sensor.status === 'online' ? 'bg-eco-green animate-pulse-gentle' :
+                    sensor.status === 'online' ? 'bg-primary animate-pulse-gentle' :
                     sensor.status === 'offline' ? 'bg-red-500' : 'bg-amber-500'
                   }`}
                   title={`${sensor.name} - ${sensor.status}`}

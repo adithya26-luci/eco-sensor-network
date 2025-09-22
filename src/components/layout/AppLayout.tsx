@@ -25,7 +25,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-eco-background">
+    <div className="flex h-screen w-full bg-background">
       {(sidebarOpen || !isMobile) && (
         <div 
           className={`${isMobile ? 'fixed inset-0 bg-black bg-opacity-50 z-40' : ''}`}
@@ -58,7 +58,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             ) : (
               <Button 
                 onClick={() => setAuthDialogOpen(true)}
-                className="bg-eco-green hover:bg-eco-green/90"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <LogIn className="h-4 w-4 mr-2" />
                 Sign In
@@ -73,7 +73,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       {!chatbotOpen && (
         <Button
           onClick={() => setChatbotOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-eco-green hover:bg-eco-green/90 shadow-lg"
+          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg"
           size="icon"
         >
           <Bot className="h-6 w-6 text-white" />

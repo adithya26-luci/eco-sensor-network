@@ -82,7 +82,7 @@ const AnalyticsPage: React.FC = () => {
                     <div className="font-medium">Monthly Carbon Summary</div>
                     <div className="text-sm text-slate-500">April 2023</div>
                   </div>
-                  <button className="text-sm text-eco-teal hover:underline">
+                  <button className="text-sm text-secondary hover:underline">
                     Download PDF
                   </button>
                 </div>
@@ -92,7 +92,7 @@ const AnalyticsPage: React.FC = () => {
                     <div className="font-medium">Quarterly Environmental Impact</div>
                     <div className="text-sm text-slate-500">Q1 2023</div>
                   </div>
-                  <button className="text-sm text-eco-teal hover:underline">
+                  <button className="text-sm text-secondary hover:underline">
                     Download PDF
                   </button>
                 </div>
@@ -102,7 +102,7 @@ const AnalyticsPage: React.FC = () => {
                     <div className="font-medium">Annual CO₂ Offset Report</div>
                     <div className="text-sm text-slate-500">2022</div>
                   </div>
-                  <button className="text-sm text-eco-teal hover:underline">
+                  <button className="text-sm text-secondary hover:underline">
                     Download PDF
                   </button>
                 </div>

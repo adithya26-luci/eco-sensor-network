@@ -95,7 +95,7 @@ const UserMenu: React.FC = () => {
                     <User className="h-8 w-8" />
                   </AvatarFallback>
                 </Avatar>
-                <label className="absolute bottom-0 right-0 bg-eco-green rounded-full p-1 cursor-pointer hover:bg-eco-green/80">
+                <label className="absolute bottom-0 right-0 bg-primary rounded-full p-1 cursor-pointer hover:bg-primary/80">
                   <Camera className="h-3 w-3 text-white" />
                   <input 
                     type="file" 
@@ -122,7 +122,7 @@ const UserMenu: React.FC = () => {
               <Button type="button" variant="outline" onClick={() => setIsProfileOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-eco-green">
+              <Button type="submit" className="bg-primary text-primary-foreground">
                 Save Changes
               </Button>
             </div>

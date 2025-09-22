@@ -111,7 +111,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({ open, onOpenChange,
             </Button>
             <Button 
               type="submit" 
-              className={`bg-eco-green ${isMobile ? "w-full" : ""}`} 
+              className={`bg-primary text-primary-foreground ${isMobile ? "w-full" : ""}`} 
               disabled={!amount || isLoading}
             >
               {isLoading ? 'Processing...' : 'Confirm Investment'}

@@ -69,7 +69,7 @@ const CarbonCreditsCalculator: React.FC = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-eco-green" />
+          <Calculator className="h-5 w-5 text-primary" />
           Carbon Credits Calculator
         </CardTitle>
       </CardHeader>
@@ -103,7 +103,7 @@ const CarbonCreditsCalculator: React.FC = () => {
           </div>
           
           <div className="flex items-end">
-            <Button onClick={addActivity} className="w-full bg-eco-green hover:bg-eco-green/90">
+            <Button onClick={addActivity} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
               Add Activity
             </Button>
           </div>
@@ -124,20 +124,20 @@ const CarbonCreditsCalculator: React.FC = () => {
                   <span className="text-sm">
                     {activity.type}: {activity.amount} {activity.unit}
                   </span>
-                  <span className="text-sm font-medium text-eco-green">
+                  <span className="text-sm font-medium text-primary">
                     +{Math.abs(activity.amount * activity.carbonFactor).toFixed(1)} kg CO₂
                   </span>
                 </div>
               ))}
             </div>
             
-            <div className="mt-4 p-4 bg-eco-green/10 rounded-lg">
+            <div className="mt-4 p-4 bg-primary/10 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Leaf className="h-5 w-5 text-eco-green" />
+                  <Leaf className="h-5 w-5 text-primary" />
                   <span className="font-medium">Total Carbon Credits</span>
                 </div>
-                <span className="text-xl font-bold text-eco-green">
+                <span className="text-xl font-bold text-primary">
                   {totalCredits.toFixed(1)} kg CO₂
                 </span>
               </div>

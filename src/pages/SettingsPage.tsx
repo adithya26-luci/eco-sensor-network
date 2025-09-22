@@ -66,7 +66,7 @@ const SettingsPage: React.FC = () => {
                     {user?.name ? user.name.slice(0, 2).toUpperCase() : <User className="h-8 w-8" />}
                   </AvatarFallback>
                 </Avatar>
-                <label className="absolute bottom-0 right-0 bg-eco-green rounded-full p-2 cursor-pointer hover:bg-eco-green/80">
+                <label className="absolute bottom-0 right-0 bg-primary rounded-full p-2 cursor-pointer hover:bg-primary/80">
                   <Camera className="h-4 w-4 text-white" />
                   <input 
                     type="file" 
@@ -109,7 +109,7 @@ const SettingsPage: React.FC = () => {
               />
             </div>
             
-            <Button onClick={handleSaveProfile} className="mt-2 bg-eco-green hover:bg-eco-green/90">
+            <Button onClick={handleSaveProfile} className="mt-2 bg-primary text-primary-foreground hover:bg-primary/90">
               Save Changes
             </Button>
           </CardContent>
@@ -180,7 +180,7 @@ const SettingsPage: React.FC = () => {
               <div className="mt-4">
                 <Button 
                   onClick={() => setShowChatbot(true)}
-                  className="bg-eco-green hover:bg-eco-green/90"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   <Bot className="h-4 w-4 mr-2" />
                   Open Chat Assistant

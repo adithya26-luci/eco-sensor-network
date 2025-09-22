@@ -63,16 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Eco-Sensor custom colors
-				eco: {
-					'green': '#2E7D32',
-					'teal': '#00796B',
-					'amber': '#FFC107',
-					'leaf': '#8BC34A',
-					'background': '#F5F7FA',
-					'dark': '#263238',
-					'light': '#ECEFF1'
-				}
+				// Remove non-semantic colors - use semantic tokens instead
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -163,7 +163,7 @@ const ProjectsPage: React.FC = () => {
   const getStatusColor = (status: Project['status']) => {
     switch (status) {
       case 'active':
-        return 'bg-eco-green text-white';
+        return 'bg-primary text-primary-foreground';
       case 'completed':
         return 'bg-blue-500 text-white';
       case 'planning':
@@ -196,7 +196,7 @@ const ProjectsPage: React.FC = () => {
             <RefreshCwIcon className="h-4 w-4 mr-2" />
             {!isMobile && "Refresh"}
           </Button>
-          <Button size={isMobile ? "sm" : "sm"} className="bg-eco-green hover:bg-eco-green/90">
+          <Button size={isMobile ? "sm" : "sm"} className="bg-primary text-primary-foreground hover:bg-primary/90">
             <PlusIcon className="h-4 w-4 mr-2" />
             {!isMobile && "New Project"}
           </Button>
@@ -212,7 +212,7 @@ const ProjectsPage: React.FC = () => {
                 <p className="text-sm font-medium text-muted-foreground">Total Projects</p>
                 <p className="text-2xl font-bold">{mockProjects.length}</p>
               </div>
-              <TreePineIcon className="h-8 w-8 text-eco-green" />
+              <TreePineIcon className="h-8 w-8 text-primary" />
             </div>
           </CardContent>
         </Card>
@@ -225,7 +225,7 @@ const ProjectsPage: React.FC = () => {
                 <p className="text-2xl font-bold">{mockProjects.reduce((sum, p) => sum + p.co2Reduced, 0).toLocaleString()}</p>
                 <p className="text-xs text-muted-foreground">tons</p>
               </div>
-              <LeafIcon className="h-8 w-8 text-eco-green" />
+              <LeafIcon className="h-8 w-8 text-primary" />
             </div>
           </CardContent>
         </Card>
@@ -237,7 +237,7 @@ const ProjectsPage: React.FC = () => {
                 <p className="text-sm font-medium text-muted-foreground">Total Investment</p>
                 <p className="text-2xl font-bold">${(mockProjects.reduce((sum, p) => sum + p.investment, 0) / 1000000).toFixed(1)}M</p>
               </div>
-              <DollarSignIcon className="h-8 w-8 text-eco-teal" />
+              <DollarSignIcon className="h-8 w-8 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -250,7 +250,7 @@ const ProjectsPage: React.FC = () => {
                 <p className="text-2xl font-bold">{mockSensors.filter(s => s.status === 'online').length}</p>
                 <p className="text-xs text-muted-foreground">active monitoring</p>
               </div>
-              <TargetIcon className="h-8 w-8 text-eco-teal" />
+              <TargetIcon className="h-8 w-8 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -334,10 +334,10 @@ const ProjectsPage: React.FC = () => {
                             <p className="text-xs text-gray-600">{sensor.name}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-lg font-bold text-eco-green">{sensor.lastReading.co2} PPM</p>
+                            <p className="text-lg font-bold text-primary">{sensor.lastReading.co2} PPM</p>
                             <Badge 
                               variant={sensor.status === 'online' ? 'default' : 'secondary'}
-                              className={sensor.status === 'online' ? 'bg-eco-green text-xs' : 'text-xs'}
+                              className={sensor.status === 'online' ? 'bg-primary text-primary-foreground text-xs' : 'text-xs'}
                             >
                               {sensor.status}
                             </Badge>
@@ -384,7 +384,7 @@ const ProjectsPage: React.FC = () => {
                       </Button>
                       <Button 
                         size="sm" 
-                        className="flex-1 bg-eco-teal text-white hover:bg-eco-teal/90"
+                        className="flex-1 bg-secondary text-secondary-foreground hover:bg-secondary/90"
                         onClick={() => handleInvestClick(project.id, project.name)}
                       >
                         <DollarSignIcon className="h-4 w-4 mr-1" />

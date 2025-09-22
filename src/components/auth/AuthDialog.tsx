@@ -128,7 +128,7 @@ const AuthDialog: React.FC<AuthDialogProps> = ({ open, onOpenChange }) => {
               
               <Button 
                 type="submit" 
-                className="w-full bg-eco-green" 
+                className="w-full bg-primary text-primary-foreground"
                 disabled={isLoading}
               >
                 {isLoading ? 'Signing in...' : 'Sign In'}
@@ -147,7 +147,7 @@ const AuthDialog: React.FC<AuthDialogProps> = ({ open, onOpenChange }) => {
                       <User className="h-8 w-8" />
                     </AvatarFallback>
                   </Avatar>
-                  <label className="absolute bottom-0 right-0 bg-eco-green rounded-full p-1 cursor-pointer hover:bg-eco-green/80">
+                  <label className="absolute bottom-0 right-0 bg-primary rounded-full p-1 cursor-pointer hover:bg-primary/80">
                     <Camera className="h-3 w-3 text-white" />
                     <input 
                       type="file" 
@@ -215,7 +215,7 @@ const AuthDialog: React.FC<AuthDialogProps> = ({ open, onOpenChange }) => {
               
               <Button 
                 type="submit" 
-                className="w-full bg-eco-green" 
+                className="w-full bg-primary text-primary-foreground" 
                 disabled={isLoading}
               >
                 {isLoading ? 'Creating account...' : 'Create Account'}
