@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
             <LeafIcon className="h-5 w-5 text-white" />
           </div>
           <div>
-            <span className="text-xl font-bold text-gray-800">EcoTracker</span>
+            <span className="text-xl font-bold text-gray-800">EcoVate</span>
             <p className="text-xs text-gray-500">Your carbon footprint companion</p>
           </div>
         </div>
